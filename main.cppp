@@ -1,0 +1,68 @@
+#include <iostream>
+
+using namespace std;
+class Solution {
+public:
+    int computeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2) {
+        int x1,x2,y1,y2; 
+        int o_x=0, o_y=0;
+        x1 = abs(ax1 - ax2); //find all the lengths
+        x2 = abs(bx1-bx2);
+        y1 = abs(ay1 - ay2);
+        y2 = abs(by1 -by2);
+        
+        //cout << x1 << x2<<y1<<y2;
+        
+        //find total area for no overlap
+        int total_a = x1*y1 + x2*y2;
+        //cout <<"full area "<<total_a <<endl;
+        //find if there is an overlap 
+        
+            if(ax1 >= bx1){
+                if(bx2>ax1){
+                    //overlap in x direction
+                    o_x = bx2 - ax1; //find length of inner rectangle 
+                    if(bx2>ax2)
+                    o_x = x1; //r1 is inside r2
+                }
+            }
+            else{
+                if(ax2>bx1){
+                    //overlap in x direction
+                    o_x = ax2 - bx1; //find length of inner rectangle 
+                    //when one rectangle is fully inside another
+                    if(ax2>bx2)
+                    o_x = x2; //r2 is inside r1
+                }
+            }
+            if(ay1 >= by1){
+                if(by2>ay1)
+                o_y = by2 - ay1; 
+                if(by2>ay2)
+                o_y =y1; //r1 is inside r2
+            }
+            else{
+                if(ay2>by1){
+                    o_y = ay2 - by1;
+                    if(ay2>by2)
+                    o_y =y2; //r2 is inside r1
+                }
+                
+            }
+            //test case of one rectangle fully inside another
+            
+          //  cout << "overlap length x" <<o_x <<endl;
+          //  cout << "overlap length y" <<o_y <<endl;
+            if((o_y || o_x )&& x1 && x2 && y1 && y2) //remove zero times zero 
+             total_a = total_a - o_y * o_x;         
+        
+        return total_a;
+    }
+};
+int main()
+{
+    Solution test1;
+    cout <<test1.computeArea(-1,-1,1,1,-2,-2,2,2);
+
+    return 0;
+}
